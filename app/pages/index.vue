@@ -24,6 +24,8 @@
               aria-label="Email address"
             />
 
+            <input type='text' v-model="someText" />
+            {{ someText }}
             <button
               class="flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded"
               type="submit"
@@ -56,9 +58,25 @@ import settings from '@/content/settings/general.json';
 })
 export default class Home extends Vue {
   welcomeText = settings.welcomeText;
+  someText = 'initial text'
 
   get posts(): Post[] {
     return this.$store.state.posts;
+  }
+
+  mounted() {
+    console.log('index page mounted')
+    try {
+      if (typeof window != undefined) {
+        window.addEventListener('pageshow', function (event) {
+            console.log('event.persisted', event.persisted);
+            console.log('performance.getEntriesByType("navigation")[0].type', performance.getEntriesByType("navigation")[0].type);
+          },
+          false);
+      }
+    } catch (e) {
+
+    }
   }
 
   isSignedUp = false;
